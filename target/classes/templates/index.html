@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafka Formulario</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Enviar Mensaje a Kafka</h1>
+    <form id="kafkaForm">
+        <label for="message">Mensaje:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <h2>Mensajes Recibidos</h2>
+    <table id="messagesTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Mensaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los mensajes recibidos serán agregados aquí -->
+        </tbody>
+    </table>
+
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
