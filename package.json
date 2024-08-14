@@ -1,0 +1,14 @@
+{
+  "name": "ejercicio08",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "description": "",
+  "dependencies": {
+    "jquery": "^3.7.1"
+  }
+}

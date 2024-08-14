@@ -1,4 +1,4 @@
-document.getElementById('kafkaForm').addEventListener('submit', function(event) {
+document.getElementById('messageForm').addEventListener('submit', function(event) {
     event.preventDefault();
     
     const message = document.getElementById('message').value;
@@ -8,24 +8,15 @@ document.getElementById('kafkaForm').addEventListener('submit', function(event) 
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: message }),
+        body: JSON.stringify({ message: document.getElementById('message').value }),
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            addMessageToTable(data.id, message);
-        } else {
-            alert('Error al enviar el mensaje');
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
     });
-});
 
-function addMessageToTable(id, message) {
-    const table = document.getElementById('messagesTable').getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-    const idCell = newRow.insertCell(0);
-    const messageCell = newRow.insertCell(1);
-
-    idCell.textContent = id;
-    messageCell.textContent = message;
-}

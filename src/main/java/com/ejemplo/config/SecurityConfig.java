@@ -13,7 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/sendMessage").permitAll()  // Permitir acceso a estas rutas sin autenticación
+                .antMatchers("/", "/sendMessage","/styles.css", "/scripts.js","favicon.ico").permitAll()  // Permitir acceso a estas rutas sin autenticación
                 .anyRequest().authenticated()  // Cualquier otra ruta requiere autenticación
                 .and()
             .csrf().disable()  // Desactivar CSRF para permitir peticiones POST sin token CSRF

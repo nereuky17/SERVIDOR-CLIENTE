@@ -1,19 +1,25 @@
 package com.ejemplo.service;
 
-import com.ejemplo.controller.MessageController.MessageForm;
-import com.ejemplo.controller.MessageController.Response;
-import com.ejemplo.service.KafkaProducer;
+
+import com.ejemplo.controller.MessageController;
+import com.ejemplo.controller.Response; // Add this import statement
+import com.ejemplo.controller.MessageForm; // Add this import statement
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.Model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull; // Add this import statement
+import static org.junit.Assert.assertTrue; // Add this import statement
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+
+@SpringBootTest
 class MessageControllerTest {
 
     @Mock
@@ -36,16 +42,17 @@ class MessageControllerTest {
 
     @Test
     void testSendMessage() {
-        MessageForm form = new MessageForm();
-        form.setMessage("Hello, Kafka!");
+    MessageForm form = new MessageForm();
+    form.setMessage("Hello, Kafka!");
 
-        Response response = messageController.sendMessage(form);
+    String message = form.getMessage();
+    Response response = messageController.sendMessage(message);
 
-        verify(kafkaProducer, times(1)).sendMessage("myTopic", "Hello, Kafka!");
-        assertNotNull(response);
-        assertTrue(response.isSuccess());
-        assertEquals(1, response.getId());
-    }
+    verify(kafkaProducer, times(1)).sendMessage("myTopic", "Hello, Kafka!");
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+    assertEquals(1, response.getId());
+}
 
     @Test
     void testSendScheduledMessage() {
