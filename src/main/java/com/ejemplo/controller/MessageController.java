@@ -27,12 +27,12 @@ public class MessageController {
     // Método para manejar las solicitudes POST desde el formulario
     @PostMapping("/sendMessage")
     @ResponseBody
-    public Response sendMessage(@RequestBody MessageForm form) {
-        kafkaProducer.sendMessage("myTopic", form.getMessage());
-        int id = counter.incrementAndGet();
-        return new Response(id, true);
-    }
-
+    public Response sendMessage(@RequestParam("message") String message) {
+    kafkaProducer.sendMessage("myTopic", message);
+    int id = counter.incrementAndGet();
+    return new Response(id, true);
+}
+    
     // Tarea programada para enviar un mensaje cada 10 segundos
     @Scheduled(fixedRate = 10000) // 10000 milisegundos = 10 segundos
     public void sendScheduledMessage() {
@@ -41,34 +41,7 @@ public class MessageController {
         System.out.println("Sent: " + message);
     }
 
-    // Clases internas para manejar el formulario y la respuesta
-    static class MessageForm {
-        private String message;
+   
 
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-    }
-
-    static class Response {
-        private int id;
-        private boolean success;
-
-        public Response(int id, boolean success) {
-            this.id = id;
-            this.success = success;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public boolean isSuccess() {
-            return success;
-        }
-    }
+    
 }
